@@ -40,7 +40,11 @@
 		<!--工具条-->
 		<el-col :span="24" class="toolbar">
 			<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+			<el-pagination layout="total, sizes, prev, pager, next, jumper"
+						   @size-change="handleSizeChange"
+						   @current-change="handleCurrentChange"
+						   :page-sizes="[10, 20, 50]"
+						   :page-size="pageSize" :total="total" style="float:right;">
 			</el-pagination>
 		</el-col>
 
@@ -116,9 +120,9 @@
 				users: [],
 				total: 0,
 				page: 1,
+				pageSize: 10,
 				listLoading: false,
 				sels: [],//列表选中列
-
 				editFormVisible: false,//编辑界面是否显示
 				editLoading: false,
 				editFormRules: {
@@ -163,18 +167,22 @@
 				this.page = val;
 				this.getUsers();
 			},
+			handleSizeChange(val){
+				this.pageSize = val;
+				this.getUsers();
+			},
 			//获取用户列表
 			getUsers() {
 				let para = {
 					page: this.page,
-					pageSize:20,
+					pageSize:this.pageSize,
 					name: this.filters.name
 				};
 				this.listLoading = true;
 				//NProgress.start();
 				getUserListPage(para).then((res) => {
 					console.info(res)
-					this.total = res.data.total;
+					this.total = res.data.data.totalElements;
 					this.users = res.data.data.content;
 					this.listLoading = false;
 					//NProgress.done();
