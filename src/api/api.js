@@ -11,10 +11,8 @@ export const getUserListPage = params => { return axios.get(`${base}/user/getUse
 
 export const getAdminListPage = params => { return axios.get(`${base}/user/getAdminPage`, { params: params }); };
 
-export const removeUser = params => { return axios.get(`${base}/user/remove`, { params: params }); };
+export const removeUser = params => { return axios.get(`${base}/user/delUser`,{ params: params }); };
 
 export const batchRemoveUser = params => { return axios.get(`${base}/user/batchremove`, { params: params }); };
-
-export const editAdmin = params => { return axios.get(`${base}/user/edit`, { params: params }); };
 
 export const addAdmin = params => { return axios.post(`${base}/user/saveAdmin`, params ); };

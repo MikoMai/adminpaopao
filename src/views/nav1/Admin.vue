@@ -28,7 +28,7 @@
 			<el-table-column prop="birthday" label="生日" min-width="200" sortable>
 			</el-table-column>
 			<el-table-column label="操作" width="200">
-				<template scope="scope">
+				<template slot-scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 				</template>
@@ -59,7 +59,7 @@
 					</el-radio-group>
 				</el-form-item>
 				<el-form-item label="生日">
-					<el-date-picker type="date" placeholder="选择日期" v-model="user.birth"></el-date-picker>
+					<el-date-picker type="date" placeholder="选择日期" v-model="user.birthday"></el-date-picker>
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -98,7 +98,8 @@
 <script>
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
-	import { getAdminListPage, removeUser, batchRemoveUser, addAdmin, editAdmin } from '../../api/api';
+	import { getAdminListPage, removeUser, batchRemoveUser, addAdmin } from '../../api/api';
+	import qs from 'qs';
 
 	export default {
 		data() {
@@ -188,7 +189,7 @@
 			//显示编辑界面
 			handleEdit: function (index, row) {
 				this.editFormVisible = true;
-				this.editForm = Object.assign({}, row);
+				this.user = Object.assign({}, row);
 			},
 			//显示新增界面
 			handleAdd: function () {
@@ -201,17 +202,14 @@
 					if (valid) {
 						this.$confirm('确认提交吗？', '提示', {}).then(() => {
 							this.editLoading = true;
-							//NProgress.start();
-							let para = Object.assign({}, this.editForm);
-							para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
-							editAdmin(para).then((res) => {
+							let para = Object.assign({}, this.user);
+							para.birthday = (!para.birthday || para.birthday == '') ? '' : util.formatDate.format(new Date(para.birthday), 'yyyy-MM-dd');
+							addAdmin(para).then((res) => {
 								this.editLoading = false;
-								//NProgress.done();
 								this.$message({
 									message: '提交成功',
 									type: 'success'
 								});
-								this.$refs['editForm'].resetFields();
 								this.editFormVisible = false;
 								this.getUsers();
 							});
@@ -225,13 +223,10 @@
 					if (valid) {
 						this.$confirm('确认提交吗？', '提示', {}).then(() => {
 							this.addLoading = true;
-							//NProgress.start();
 							let para = Object.assign({}, this.user);
 							para.birthday = (!para.birthday || para.birthday == '') ? '' : util.formatDate.format(new Date(para.birthday), 'yyyy-MM-dd');
-
 							addAdmin(JSON.stringify(para)).then((res) => {
 								this.addLoading = false;
-								//NProgress.done();
 								this.$message({
 									message: '提交成功',
 									type: 'success'

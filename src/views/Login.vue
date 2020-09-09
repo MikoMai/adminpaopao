@@ -57,7 +57,7 @@
               name: '张某某'
             };
              sessionStorage.setItem('user', JSON.stringify(user));
-            this.$router.push({ path: '/table' });
+            this.$router.push({ path: '/admin' });
             // var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
             // requestLogin(loginParams).then(data => {
             //   this.logining = false;
