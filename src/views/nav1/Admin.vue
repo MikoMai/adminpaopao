@@ -25,7 +25,9 @@
 			</el-table-column>
 			<el-table-column prop="sex" label="性别" width="150" :formatter="formatSex" sortable>
 			</el-table-column>
-			<el-table-column prop="birthday" label="生日" min-width="200" sortable>
+			<el-table-column prop="birthday" label="生日" width="150" sortable>
+			</el-table-column>
+			<el-table-column prop="phone" label="电话" min-width="150" sortable>
 			</el-table-column>
 			<el-table-column label="操作" width="200">
 				<template slot-scope="scope">
@@ -37,7 +39,6 @@
 
 		<!--工具条-->
 		<el-col :span="24" class="toolbar">
-			<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
 			<el-pagination layout="total, sizes, prev, pager, next, jumper"
 						   @size-change="handleSizeChange"
 						   @current-change="handleCurrentChange"
@@ -61,6 +62,9 @@
 				<el-form-item label="生日">
 					<el-date-picker type="date" placeholder="选择日期" v-model="user.birthday"></el-date-picker>
 				</el-form-item>
+				<el-form-item label="电话" prop="phone">
+					<el-input v-model="user.phone" auto-complete="off"></el-input>
+				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button @click.native="editFormVisible = false">取消</el-button>
@@ -82,6 +86,9 @@
 				</el-form-item>
 				<el-form-item label="生日">
 					<el-date-picker type="date" placeholder="选择日期" v-model="user.birthday"></el-date-picker>
+				</el-form-item>
+				<el-form-item label="电话" prop="phone">
+					<el-input v-model="user.phone" auto-complete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="密码">
 					<el-input type="password" v-model="user.password"></el-input>
@@ -126,7 +133,8 @@
 					name: '',
 					sex: 0,
 					birthday: '',
-					password:''
+					password:'',
+					phone:''
 				},
 
 				addFormVisible: false,//新增界面是否显示
@@ -193,7 +201,7 @@
 			},
 			//显示新增界面
 			handleAdd: function () {
-				this.user= {id: 0,name: '',sex: 0,birthday: '',password:''};
+				this.user= {id: 0,name: '',sex: 0,birthday: '',password:'',phone:''};
 				this.addFormVisible = true;
 			},
 			//编辑
@@ -241,28 +249,6 @@
 			selsChange: function (sels) {
 				this.sels = sels;
 			},
-			//批量删除
-			batchRemove: function () {
-				var ids = this.sels.map(item => item.id).toString();
-				this.$confirm('确认删除选中记录吗？', '提示', {
-					type: 'warning'
-				}).then(() => {
-					this.listLoading = true;
-					//NProgress.start();
-					let para = { ids: ids };
-					batchRemoveUser(para).then((res) => {
-						this.listLoading = false;
-						//NProgress.done();
-						this.$message({
-							message: '删除成功',
-							type: 'success'
-						});
-						this.getUsers();
-					});
-				}).catch(() => {
-
-				});
-			}
 		},
 		mounted() {
 			this.getUsers();

@@ -36,7 +36,6 @@
 
 		<!--工具条-->
 		<el-col :span="24" class="toolbar">
-			<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
 			<el-pagination layout="total, sizes, prev, pager, next, jumper"
 						   @size-change="handleSizeChange"
 						   @current-change="handleCurrentChange"
@@ -47,7 +46,7 @@
 
 		<!--编辑界面-->
 		<el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
-			<el-form :model="user" label-width="80px" :rules="editFormRules" ref="editForm">
+			<el-form :model="user" label-width="80px"  ref="editForm">
 				<el-form-item label="姓名" prop="name">
 					<el-input v-model="user.name" auto-complete="off"></el-input>
 				</el-form-item>
@@ -110,6 +109,9 @@
 			//性别显示转换
 			formatSex: function (row, column) {
 				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+			},
+			selsChange: function (sels) {
+				this.sels = sels;
 			},
 			handleCurrentChange(val) {
 				this.page = val;
