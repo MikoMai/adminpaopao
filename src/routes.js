@@ -4,12 +4,10 @@ import Home from './views/Home.vue'
 import Main from './views/Main.vue'
 import User from './views/nav1/User.vue'
 import Admin from './views/nav1/Admin.vue'
-import Form from './views/nav1/Form.vue'
-import Page4 from './views/nav2/Page4.vue'
-import Page5 from './views/nav2/Page5.vue'
-import Page6 from './views/nav3/Page6.vue'
 import echarts from './views/charts/echarts.vue'
 import Mission from './views/nav2/Mission.vue'
+import Gift from './views/nav2/Gift.vue'
+import News from './views/nav3/News.vue'
 let routes = [
     {
         path: '/login',
@@ -23,7 +21,6 @@ let routes = [
         name: '',
         hidden: true
     },
-    //{ path: '/main', component: Main },
     {
         path: '/',
         component: Home,
@@ -42,26 +39,16 @@ let routes = [
         iconCls: 'fa fa-id-card-o',
         children: [
             { path: '/Mission', component: Mission, name: '跑跑任务' },
-            { path: '/page5', component: Page5, name: '页面5' }
+            { path: '/Gift', component: Gift, name: '积分礼物' },
         ]
     },
     {
         path: '/',
         component: Home,
-        name: '',
+        name: '社区资讯',
         iconCls: 'fa fa-address-card',
-        leaf: true,//只有一个节点
         children: [
-            { path: '/page6', component: Page6, name: '导航三' }
-        ]
-    },
-    {
-        path: '/',
-        component: Home,
-        name: 'Charts',
-        iconCls: 'fa fa-bar-chart',
-        children: [
-            { path: '/echarts', component: echarts, name: 'echarts' }
+            { path: '/News', component: News, name: '资讯信息' }
         ]
     },
     {

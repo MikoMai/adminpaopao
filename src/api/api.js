@@ -23,3 +23,16 @@ export const getMissionPage = params => { return axios.get(`${base}/mission/getM
 export const saveMission = params => { return axios.post(`${base}/mission/saveMission`, params ); };
 
 export const removeMission = params => { return axios.get(`${base}/mission/updateStatus`,{ params: params }); };
+
+
+
+export const getGiftPage = params => { return axios.get(`${base}/gift/getGiftPage`, { params: params }); };
+export const removeGift = params => { return axios.get(`${base}/gift/updateStatus`,{ params: params }); };
+export const saveGift = params => { return axios.post(`${base}/gift/saveGift`, params ); };
+
+
+
+export const getNewsPage = params => { return axios.get(`${base}/news/getNewsPage`, { params: params }); };
+export const removeNews = params => { return axios.get(`${base}/news/updateStatus`,{ params: params }); };
+export const saveNews = params => { return axios.post(`${base}/news/saveNews`, params ); };
+
